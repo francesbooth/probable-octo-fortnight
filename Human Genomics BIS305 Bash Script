@@ -1,0 +1,33 @@
+``` 
+# create versions of 1000Genomes file with only our populations at autosomal sites for FILE in *.include do 
+  plink --bfile 1000Genomes --keep $FILE --make-bed --allow-extra-chr --chr 1-22 --out subset.aut.$FILE 
+``` 
+ 
+``` 
+# create versions of 1000Genomes file with only mitochondrial sites split into different populations for FILE in *.include do 
+  plink --bfile 1000Genomes --keep $FILE --make-bed --allow-extra-chr --chr 26 --out subset.mit.$FILE 
+``` 
+ 
+``` 
+# take autosomal populations and calculate the observed number of homozygotes and the inbreeding coefficient for FILE in subset.aut.british.include subset.aut.chinese.include subset.aut.finnish.include subset.aut.gujaratihouston.include subset.aut.iberian.include subset.aut.japanese.include do  
+  plink --bfile $FILE --het --out plink.$FILE done 
+``` 
+ 
+``` 
+# take mitochondrial sites for different populations and calculate minor allele frequency for FILE in subset.mit.british.include subset.mit.chinese.include  subset.mit.finnish.include subset.mit.gujaratihouston.include subset.mit.iberian.include  subset.mit.japanese.include do 
+  plink --bfile $FILE --freq --out maf.$FILE done 
+``` 
+ 
+``` 
+# create versions of 1000Genomes file with only our populations at all sites, Impute the sex from the X chromsome for FILE in *.include 
+  plink --bfile 1000Genomes --keep $FILE --make-bed --allow-extra-chr  --impute-sex --out test.$FILE 
+``` 
+ 
+``` 
+# create versions of 1000Genomes file with only Y sites split into different populations for FILE in *.include do 
+  plink --bfile 1000Genomes --keep $FILE --make-bed --allow-extra-chr --chr 24 --out subset.y.$FILE done 
+``` 
+ 
+``` 
+# take Y sites for different populations and calculate minor allele frequency for FILE in subset.y.british.include subset.y.chinese.include subset.y.finnish.include subset.y.gujaratihouston.include subset.y.iberian.include subset.y.japanese.include do 
+  plink --bfile $FILE --freq --out maf.$FILE 
